@@ -1,0 +1,15 @@
+<article class="card-movie">
+    {{#if image}}
+        <figure>
+            <img src="{{image}}" alt="Постер фильма {{title}}">
+        </figure>
+    {{/if}}
+
+    <h3>
+        <a href="/movies/{{id}}">{{title}}</a>
+    </h3>
+    <p>
+        {{#if director}}<strong>Режиссёр:</strong> {{director}}<br>{{/if}}
+        <strong>Жанр:</strong> {{genre}}
+    </p>
+</article>

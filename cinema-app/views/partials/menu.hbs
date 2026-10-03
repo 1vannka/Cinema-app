@@ -1,0 +1,9 @@
+<aside id="main-navigation" aria-label="Разделы сайта">
+    <nav id="nav-app">
+        <ul>
+            <li v-for="link in links" :key="link.url">
+                <a :href="resolvePath(link.url)" :class="{ 'active-link': isActive(link.url) }" v-text="link.text"></a>
+            </li>
+        </ul>
+    </nav>
+</aside>

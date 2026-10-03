@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Добавить сеанс - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main id="main-content" class="form-container">
+    <section class="movie-form-wrapper">
+        <h2>Добавить новый сеанс</h2>
+
+        {{#if error}}
+            <div class="error-message" style="margin-bottom: 20px;">
+                {{error}}
+            </div>
+        {{/if}}
+
+        <form action="/sessions" method="POST" class="movie-form">
+            <div>
+                <label>Название фильма (точно как в базе):</label>
+                <input type="text" name="movieTitle" value="{{formData.movieTitle}}" placeholder="Например: Начало" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label>Дата и время:</label>
+                    <input type="datetime-local" name="datetime" value="{{formData.datetime}}" required>
+                </div>
+                <div class="form-col">
+                    <label>Зал:</label>
+                    <input type="text" name="hall" value="{{formData.hall}}" placeholder="Зал 1">
+                </div>
+                <div class="form-col">
+                    <label>Количество мест</label>
+                    <input type="number" name="capacity" value="{{formData.capacity}}" min="1" required>
+                </div>
+            </div>
+
+            <button type="submit" class="card-movie_button" style="margin-top: 15px;">Создать сеанс</button>
+
+            <div class="form-cancel-wrapper">
+                <a href="/movies" class="form-cancel-link">Отмена</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

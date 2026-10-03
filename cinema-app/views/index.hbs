@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>КиноРум - афиша и билеты</title>
+</head>
+<body>
+<p id="content"><a href="#main-content">Перейти к содержимому</a></p>
+
+{{> header }}
+
+<main id="main-content">
+    <div class="sidebar" id="left-sidebar">
+        <section id="movies" class="movies" aria-labelledby="movies-heading">
+            <h2 id="movies-heading">Идут сейчас</h2>
+            <ul>
+                {{#each currentMovies}}
+                    <li>
+                        {{> movie_card this }}
+                    </li>
+                {{/each}}
+            </ul>
+        </section>
+
+        <section id="genres" aria-labelledby="genres-heading">
+            <h2 id="genres-heading">Жанры</h2>
+            <ol>
+                <li>Боевик</li>
+                <li>Комедия</li>
+                <li>Драма</li>
+                <li>Фантастика</li>
+            </ol>
+        </section>
+    </div>
+
+    {{#if dayMovie}}
+        <section id="daymovie" aria-labelledby="poster-heading">
+            <h2 id="poster-heading">Фильм дня</h2>
+            <article class="card-movie">
+                <header>
+                    <h3 id="daymovie-header">
+                        <a href="/movies/{{dayMovie.id}}">{{dayMovie.title}}</a>
+                    </h3>
+                </header>
+                <figure>
+                    {{#if dayMovie.image}}
+                        <img src="{{dayMovie.image}}" alt="Постер фильма {{dayMovie.title}}">
+                    {{else}}
+                        <img src="/images/default_poster.jpg" alt="Нет постера">
+                    {{/if}}
+                    <figcaption>{{dayMovie.title}} {{#if dayMovie.year}}({{dayMovie.year}}){{/if}}</figcaption>
+                </figure>
+                <pre class="card-movie_code"><code class="language-html">
+&lt;dl&gt;
+  &lt;dt&gt;&lt;strong&gt;Жанр&lt;/strong&gt;&lt;/dt&gt;
+  &lt;dd&gt;{{#if dayMovie.genre}}{{dayMovie.genre}}{{else}}Не указан{{/if}}&lt;/dd&gt;
+
+  &lt;dt&gt;&lt;strong&gt;Режиссёр&lt;/strong&gt;&lt;/dt&gt;
+  &lt;dd&gt;{{#if dayMovie.director}}{{dayMovie.director}}{{else}}Не указан{{/if}}&lt;/dd&gt;
+
+  &lt;dt&gt;&lt;strong&gt;Длительность&lt;/strong&gt;&lt;/dt&gt;
+  &lt;dd&gt;{{#if dayMovie.duration}}{{dayMovie.duration}} мин{{else}}Не указана{{/if}}&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+                <p>
+                    <a href="/movies/{{dayMovie.id}}" class="card-movie_button" style="text-decoration: none; display: inline-block;">Смотреть сеансы</a>
+                </p>
+            </article>
+        </section>
+    {{/if}}
+
+    <div class="sidebar" id="right-sidebar">
+        {{> menu }}
+
+        <aside aria-labelledby="news-heading">
+            <h2 id="news-heading">Новости кино</h2>
+            <div id="news-widget-app" class="news-widget">
+                <div v-if="isLoading" class="preloader">
+                    <div class="spinner"></div>
+                    <span>Загрузка...</span>
+                </div>
+
+                <div v-if="error" class="error-message" v-text="error"></div>
+
+                <div v-if="!isLoading && !error" id="news-container">
+                    <article v-for="post in posts" :key="post.id" class="news-item">
+                        <h3 class="news-title" v-text="post.title"></h3>
+                        <p class="news-body" v-text="post.body"></p>
+
+                        <div class="comments-section">
+                            <h4>Комментарии:</h4>
+                            <ul class="comments-list">
+                                <li v-for="comment in post.comments" :key="comment.id" class="comment-item">
+                                    <span class="comment-email" v-text="comment.email"></span>
+                                    <span class="comment-body" v-text="comment.body"></span>
+                                </li>
+                                <li v-if="post.comments.length === 0">Комментарии не загрузились</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <blockquote cite="https://ru.wikipedia.org/...">
+                <p>«Из всех искусств для нас важнейшим является кино.»</p>
+                <cite> Владимир Ульянов</cite>
+            </blockquote>
+        </aside>
+    </div>
+</main>
+
+{{> footer }}
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Бронирование - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main class="form-container">
+    <section class="movie-form-wrapper ticket-wrapper">
+        <h2>Покупка билета</h2>
+
+        {{#if error}}
+            <div class="ticket-error">{{error}}</div>
+        {{/if}}
+
+        <div class="ticket-info-card">
+            <h3 class="ticket-info-title">«{{session.movie.title}}»</h3>
+            <p><strong>Дата:</strong> {{displayDate}}</p>
+            <p><strong>Зал:</strong> {{#if session.hall}}{{session.hall}}{{else}}Основной{{/if}}</p>
+            <p class="ticket-warning">* Место в зале будет назначено автоматически</p>
+        </div>
+
+        <form action="/tickets" method="POST">
+            <input type="hidden" name="sessionId" value="{{session.id}}">
+            <button type="submit" class="card-movie_button">Подтвердить оплату</button>
+            <div class="form-cancel-wrapper">
+                <a href="/movies/{{session.movie.id}}" class="form-cancel-link">Отмена</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

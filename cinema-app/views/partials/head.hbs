@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="importmap">
+    {
+      "imports": { "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js" }
+    }
+</script>
+
+<script type="module">
+    import { initHeaderApp } from '/scripts/header_app.js';
+    import { initNavApp } from '/scripts/nav_app.js';
+    import { initFooterApp } from '/scripts/footer_app.js';
+    initHeaderApp();
+    initNavApp();
+    initFooterApp();
+</script>
+
+{{#if loadNews}}
+    <script type="module">
+        import { initNewsApp } from '/scripts/news_app.js';
+        initNewsApp();
+    </script>
+{{/if}}
+
+{{#if loadReviews}}
+    <script type="module">
+        import { initReviewsApp } from '/scripts/reviews_app.js';
+        initReviewsApp();
+    </script>
+{{/if}}

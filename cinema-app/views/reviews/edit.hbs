@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Редактировать отзыв - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main id="main-content" class="form-container">
+    <section class="movie-form-wrapper">
+        <h2>Редактировать отзыв</h2>
+
+        <form action="/reviews/{{review.id}}/edit" method="POST" class="movie-form">
+            <div>
+                <label>Ваш комментарий:</label>
+                <textarea name="comment" rows="6" required minlength="10">{{review.comment}}</textarea>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 15px;">
+                <button type="submit" class="card-movie_button" style="flex: 1;">Сохранить</button>
+
+                <button type="submit" formaction="/reviews/{{review.id}}/delete" class="card-movie_button" style="flex: 1; background-color: #8C141E;" onclick="return confirm('Удалить отзыв?');">Удалить</button>
+            </div>
+
+            <div class="form-cancel-wrapper">
+                <a href="/feedback" class="form-cancel-link">Отмена</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

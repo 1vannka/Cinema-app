@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Управление билетом - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main class="form-container">
+    <section class="movie-form-wrapper ticket-wrapper">
+        <h2>Билет #{{ticket.id}}</h2>
+
+        <div class="ticket-edit-card">
+            <h3 class="ticket-info-title">{{ticket.session.movie.title}}</h3>
+            <p><strong>Дата:</strong> {{displayDate}}</p>
+            <p><strong>Зал:</strong> {{#if ticket.session.hall}}{{ticket.session.hall}}{{else}}Основной{{/if}}</p>
+
+            <div class="ticket-seats-info">
+                <div><strong>Ряд:</strong> {{ticket.row}}</div>
+                <div><strong>Место:</strong> {{ticket.seat}}</div>
+            </div>
+
+            <p class="ticket-status">Статус: {{ticket.status}}</p>
+        </div>
+
+        <form action="/tickets/{{ticket.id}}/delete" method="POST" onsubmit="return confirm('Вы уверены, что хотите вернуть билет?');">
+            <button type="submit" class="card-movie_button btn-danger-full">Вернуть билет</button>
+        </form>
+
+        <div class="form-cancel-wrapper">
+            <a href="/users/{{ticket.userId}}" class="form-cancel-link">Назад в профиль</a>
+        </div>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

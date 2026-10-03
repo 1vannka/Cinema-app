@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>О нас - КиноРум</title>
+</head>
+<body>
+
+{{> header }}
+
+<main id="main-about">
+    {{> menu }}
+
+    <section id="company-info">
+        <h2>О компании</h2>
+        <figure id="company-photo">
+            <img src="/images/cinema.jpg" alt="Фото кинотеатра КиноРум" width="3500">
+            <figcaption>Наш современный кинотеатр</figcaption>
+        </figure>
+        <p id="company-description">
+            КиноРум - современный кинотеатр с удобным расположением, комфортными залами и большим выбором фильмов.
+            Мы предлагаем актуальную афишу премьер, а также классические картины для настоящих киноманов.
+        </p>
+    </section>
+
+    <aside id="address">
+        <h2>Адрес</h2>
+        <address>
+            г. Санкт-Петербург, ул. Примерная, 1<br>
+        </address>
+    </aside>
+
+    <section id="contacts">
+        <h2>Контакты</h2>
+        <p>Email: <a href="mailto:info@kinorum.ru">info@kinorum.ru</a></p>
+        <p>Телефон: <a href="tel:+71234567899">+7 (123) 456-78-99</a></p>
+    </section>
+</main>
+
+{{> footer }}
+
+</body>
+</html>

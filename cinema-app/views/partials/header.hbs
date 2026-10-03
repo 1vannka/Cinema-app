@@ -1,0 +1,50 @@
+<header id="main-header">
+    <h1>
+        <a href="/" onclick="event.preventDefault(); window.location.href = '/' + window.location.search" :class="{ 'active-link': isMainPageActive }">КиноРум</a>
+    </h1>
+
+    {{#if user}}
+        {{#unless isAdmin}}
+            <a href="/users/{{user.id}}" style="color: #D9BD9C; text-decoration: underline; margin: 0 15px;">Мой профиль</a>
+        {{/unless}}
+    {{/if}}
+
+    {{#if isAdmin}}
+        <div>
+            <a href="/movies/add" class="admin_button"> Добавить новый фильм </a>
+            <a href="/sessions/add" class="admin_button"> Добавить сеанс </a>
+        </div>
+    {{/if}}
+
+    <div class="auth-block">
+        {{#if user}}
+            <div class="auth-logged-in">
+                <span>Вы вошли как: <strong>{{user.name}}</strong></span>
+                <a href="/auth/logout" class="auth-btn logout-btn">Выйти</a>
+            </div>
+        {{else}}
+            {{#unless hideLogin}}
+                <form class="auth-form" action="/auth/login" method="POST" style="position: relative;">
+                    <input type="text" name="login" placeholder="Логин" required>
+                    <div style="display: flex; flex-direction: column;">
+                        <input type="password" name="password" placeholder="Пароль" required>
+                        {{#if authError}}
+                            <span style="color: #ff4d4d; font-size: 11px; margin-top: 2px;">{{authError}}</span>
+                        {{/if}}
+                    </div>
+
+                    <div class="auth-buttons">
+                        <button type="submit" class="auth-btn login-btn">Войти</button>
+                        <a href="/auth/register" class="auth-btn register-btn" style="text-decoration: none; text-align: center; display: inline-block;">Регистрация</a>
+                    </div>
+                </form>
+            {{/unless}}
+        {{/if}}
+    </div>
+
+    <form role="search" action="/movies/search" method="get">
+        <label for="site-search" style="display: none;">Поиск фильмов:</label>
+        <input id="site-search" name="q" type="search" placeholder="По названию или жанру">
+        <button type="submit">Найти</button>
+    </form>
+</header>

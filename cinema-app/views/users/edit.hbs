@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Настройки профиля - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main id="main-content" class="form-container">
+    <section class="movie-form-wrapper">
+        <h2>Настройки профиля</h2>
+
+        <form action="/users/{{userProfile.id}}/edit" method="POST" class="movie-form">
+            <div>
+                <label>Имя:</label>
+                <input type="text" name="name" value="{{userProfile.name}}" placeholder="Как к вам обращаться?">
+            </div>
+
+            <div>
+                <label>Новый пароль (оставьте пустым, если не хотите менять):</label>
+                <input type="password" name="password" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="card-movie_button" style="margin-top: 15px;">Сохранить изменения</button>
+
+            <div class="form-cancel-wrapper">
+                <a href="/users/{{userProfile.id}}" class="form-cancel-link">Отмена</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

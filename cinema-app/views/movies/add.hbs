@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Добавить фильм - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main id="main-content" class="form-container">
+    <section class="movie-form-wrapper">
+        <h2>Добавить новый фильм</h2>
+
+        <form action="/movies" method="POST" class="movie-form">
+            <div>
+                <label>Название:</label>
+                <input type="text" name="title" required>
+            </div>
+
+            <div>
+                <label>Ссылка на постер (URL):</label>
+                <input type="text" name="image" placeholder="/images/poster.jpg">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label>Режиссер:</label>
+                    <input type="text" name="director">
+                </div>
+                <div class="form-col">
+                    <label>Жанр:</label>
+                    <input type="text" name="genre">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label>Длительность (мин):</label>
+                    <input type="number" name="duration">
+                </div>
+                <div class="form-col">
+                    <label>Год:</label>
+                    <input type="number" name="year">
+                </div>
+            </div>
+
+            <div>
+                <label>Описание:</label>
+                <textarea name="description" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="card-movie_button" style="margin-top: 10px;">Сохранить фильм</button>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

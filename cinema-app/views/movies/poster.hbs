@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Афиша - КиноРум</title>
+</head>
+<body>
+
+{{> header }}
+
+<main id="main-content" class="main-content_poster">
+    {{> menu }}
+
+    <section class="poster-section" aria-labelledby="poster-heading">
+        <h2 id="poster-heading">Сейчас в прокате</h2>
+        <div class="poster">
+            {{#each posterMovies}}
+                {{> movie_card this}}
+            {{/each}}
+        </div>
+    </section>
+</main>
+
+{{> footer }}
+
+</body>
+</html>

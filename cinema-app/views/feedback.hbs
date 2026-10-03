@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>КиноРум - Отзывы</title>
+</head>
+<body>
+
+{{> header }}
+
+<main id="main-content">
+    <div id="reviews-widget" data-user-id="{{user.id}}" data-is-admin="{{isAdmin}}" v-cloak>
+        <section aria-labelledby="form-heading" style="text-align: center; margin-bottom: 40px;">
+            <h2 id="form-heading">Отзывы</h2>
+
+            {{#if user}}
+                <a href="/reviews/add" class="card-movie_button" style="text-decoration: none; display: inline-block;">Написать отзыв</a>
+            {{else}}
+                <div class="error-message">
+                    Чтобы оставить отзыв, нужно <a href="/auth/register" style="text-decoration: underline;">зарегистрироваться</a> или войти.
+                </div>
+            {{/if}}
+        </section>
+
+        <section aria-labelledby="reviews-heading">
+            <h2 id="reviews-heading">Лента отзывов</h2>
+
+            <div id="reviews-container" class="reviews-container">
+                <div v-if="isLoading" class="preloader">
+                    <div class="spinner"></div>
+                    <span>Загрузка отзывов...</span>
+                </div>
+
+                <div v-else>
+                    <p v-if="!hasReviews" class="no-reviews">Пока нет отзывов. Будьте первым!</p>
+
+                    <article v-for="review in reviews" :key="review.id" class="user-review">
+                        <header>
+                            <h4 class="review-name" v-text="review.user?.name || review.user?.login || 'Аноним'"></h4>
+                            <time class="review-date" v-text="formatDate(review.createdAt)"></time>
+                        </header>
+
+                        <div>
+                            <p class="review-comment" v-text="review.comment"></p>
+
+                            <div class="review-actions">
+                                <a v-if="isAuthor(review.userId)" :href="'/reviews/' + review.id + '/edit'" class="edit-review" style="text-decoration: none; display: inline-block; padding: 5px 10px; border-radius: 4px; background-color: #D9BD9C; color: #261C14;">Управление</a>
+
+                                <form v-if="isAdminUser && !isAuthor(review.userId)" :action="'/reviews/' + review.id + '/delete'" method="POST" style="display: inline;" @submit="confirmDelete($event)">
+                                    <button class="delete-review" type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div v-if="notification.show" class="toast-notification">
+            <strong>Новый отзыв от: <span v-text="notification.author"></span>!</strong>
+            <p>Лента обновилась автоматически.</p>
+        </div>
+    </div>
+
+    {{> menu }}
+</main>
+
+{{> footer }}
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {{> head }}
+    <title>Редактировать сеанс - КиноРум</title>
+</head>
+<body>
+{{> header }}
+
+<main id="main-content" class="form-container">
+    <section class="movie-form-wrapper">
+        <h2>Редактировать сеанс фильма «{{session.movie.title}}»</h2>
+
+        <form action="/sessions/{{session.id}}/edit" method="POST" class="movie-form">
+            <div class="form-row">
+                <div class="form-col">
+                    <label>Дата и время:</label>
+                    <input type="datetime-local" name="datetime" value="{{formattedDate}}" required>
+                </div>
+                <div class="form-col">
+                    <label>Зал:</label>
+                    <input type="text" name="hall" value="{{session.hall}}" placeholder="Зал 1">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 15px;">
+                <button type="submit" class="card-movie_button" style="flex: 1;">Сохранить изменения</button>
+
+                <form action="/sessions/{{session.id}}/delete" method="POST" style="flex: 1;">
+                    <button type="submit" class="card-movie_button" style="width: 100%; background-color: #8C141E;" onclick="return confirm('Удалить этот сеанс?');">Удалить сеанс</button>
+                </form>
+            </div>
+
+            <div class="form-cancel-wrapper">
+                <a href="/movies/{{session.movieId}}" class="form-cancel-link">Отмена</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+{{> footer }}
+</body>
+</html>
