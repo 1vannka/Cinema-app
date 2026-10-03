@@ -13,7 +13,7 @@
     <section class="profile-layout">
         <div class="profile-block-main">
             {{#if error}}
-                <div class="alert alert-warning" style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; color: #856404;">
+                <div class="alert alert-warning profile-warning">
                     <strong>Внимание:</strong> {{error}}
                 </div>
             {{/if}}
@@ -23,10 +23,10 @@
             <p><strong>Логин:</strong> {{userProfile.login}}</p>
 
             <div class="profile-actions">
-                <a href="/users/{{userProfile.id}}/edit" class="card-movie_button" style="text-decoration: none;">Изменить данные</a>
+                <a href="/users/{{userProfile.id}}/edit" class="card-movie_button link-plain-btn">Изменить данные</a>
 
                 {{#unless isAdmin}}
-                    <form action="/users/{{userProfile.id}}/delete" method="POST" style="margin: 0;" onsubmit="return confirm('Вы уверены? Это действие необратимо.');">
+                    <form action="/users/{{userProfile.id}}/delete" method="POST" class="inline-form" onsubmit="return confirm('Вы уверены? Это действие необратимо.');">
                         <button type="submit" class="card-movie_button profile-btn-delete">Удалить аккаунт</button>
                     </form>
                 {{/unless}}
@@ -45,7 +45,7 @@
                                 <strong>Место:</strong> Ряд {{this.row}}, Место {{this.seat}} <br>
                                 <span class="profile-ticket-status">{{this.status}}</span>
                             </div>
-                            <a href="/tickets/{{this.id}}/edit" class="card-movie_button profile-ticket-btn" style="color: #D9BD9C;">Управление</a>
+                            <a href="/tickets/{{this.id}}/edit" class="card-movie_button profile-ticket-btn">Управление</a>
                         </li>
                     {{/each}}
                 </ul>

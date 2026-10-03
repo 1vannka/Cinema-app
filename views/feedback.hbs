@@ -10,14 +10,14 @@
 
 <main id="main-content">
     <div id="reviews-widget" data-user-id="{{user.id}}" data-is-admin="{{isAdmin}}" v-cloak>
-        <section aria-labelledby="form-heading" style="text-align: center; margin-bottom: 40px;">
+        <section aria-labelledby="form-heading" class="section-intro-center">
             <h2 id="form-heading">Отзывы</h2>
 
             {{#if user}}
-                <a href="/reviews/add" class="card-movie_button" style="text-decoration: none; display: inline-block;">Написать отзыв</a>
+                <a href="/reviews/add" class="card-movie_button link-plain-btn">Написать отзыв</a>
             {{else}}
                 <div class="error-message">
-                    Чтобы оставить отзыв, нужно <a href="/auth/register" style="text-decoration: underline;">зарегистрироваться</a> или войти.
+                    Чтобы оставить отзыв, нужно <a href="/auth/register" class="text-link-underline">зарегистрироваться</a> или войти.
                 </div>
             {{/if}}
         </section>
@@ -44,9 +44,9 @@
                             <p class="review-comment" v-text="review.comment"></p>
 
                             <div class="review-actions">
-                                <a v-if="isAuthor(review.userId)" :href="'/reviews/' + review.id + '/edit'" class="edit-review" style="text-decoration: none; display: inline-block; padding: 5px 10px; border-radius: 4px; background-color: #D9BD9C; color: #261C14;">Управление</a>
+                                <a v-if="isAuthor(review.userId)" :href="'/reviews/' + review.id + '/edit'" class="edit-review review-manage-link">Управление</a>
 
-                                <form v-if="isAdminUser && !isAuthor(review.userId)" :action="'/reviews/' + review.id + '/delete'" method="POST" style="display: inline;" @submit="confirmDelete($event)">
+                                <form v-if="isAdminUser && !isAuthor(review.userId)" :action="'/reviews/' + review.id + '/delete'" method="POST" class="inline-form-inline" @submit="confirmDelete($event)">
                                     <button class="delete-review" type="submit">Удалить</button>
                                 </form>
                             </div>

@@ -11,7 +11,14 @@
     <section class="movie-form-wrapper">
         <h2>Редактировать фильм</h2>
 
-        <form action="/movies/{{movie.id}}/edit" method="POST" class="movie-form">
+        {{#if movie.image}}
+            <div class="poster-preview">
+                <p class="poster-preview-note">Текущий постер:</p>
+                <img src="{{movie.image}}" alt="Текущий постер {{movie.title}}" class="poster-preview-image">
+            </div>
+        {{/if}}
+
+        <form action="/movies/{{movie.id}}/edit" method="POST" enctype="multipart/form-data" class="movie-form">
             <div>
                 <label>Название:</label>
                 <input type="text" name="title" value="{{movie.title}}" required>
@@ -20,6 +27,14 @@
             <div>
                 <label>Ссылка на постер (URL):</label>
                 <input type="text" name="image" value="{{movie.image}}">
+                <small class="helper-text">Оставьте как есть если постер менять не нужно</small>
+            </div>
+
+            <div>
+                <label>Или загрузите новый постер (jpg/jpeg/png):</label>
+                <input type="file" name="posterFile" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <small class="helper-text">Если выбран файл, он будет использован вместо значения в поле url</small>
+
             </div>
 
             <div class="form-row">
@@ -49,10 +64,10 @@
                 <textarea name="description" rows="5" required>{{movie.description}}</textarea>
             </div>
 
-            <button type="submit" class="card-movie_button" style="margin-top: 10px;">Сохранить изменения</button>
+            <button type="submit" class="card-movie_button form-submit-spaced">Сохранить изменения</button>
 
-            <div style="text-align: center; margin-top: 15px;">
-                <a href="/movies/{{movie.id}}" style="color: #8C715A; text-decoration: underline;">Отмена</a>
+            <div class="form-cancel-wrapper">
+                <a href="/movies/{{movie.id}}" class="form-cancel-link">Отмена</a>
             </div>
         </form>
     </section>

@@ -11,7 +11,7 @@
     <section class="movie-form-wrapper">
         <h2>Добавить новый фильм</h2>
 
-        <form action="/movies" method="POST" class="movie-form">
+        <form action="/movies" method="POST" enctype="multipart/form-data" class="movie-form">
             <div>
                 <label>Название:</label>
                 <input type="text" name="title" required>
@@ -20,6 +20,13 @@
             <div>
                 <label>Ссылка на постер (URL):</label>
                 <input type="text" name="image" placeholder="/images/poster.jpg">
+                <small class="helper-text">Можно оставить пустым, если загрузите файл ниже</small>
+            </div>
+
+            <div>
+                <label>Или загрузите постер (jpg/jpeg/png):</label>
+                <input type="file" name="posterFile" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <small class="helper-text">Если выбран файл, в БД сохранится путь к загруженному постеру</small>
             </div>
 
             <div class="form-row">
@@ -49,7 +56,7 @@
                 <textarea name="description" rows="5" required></textarea>
             </div>
 
-            <button type="submit" class="card-movie_button" style="margin-top: 10px;">Сохранить фильм</button>
+            <button type="submit" class="card-movie_button form-submit-spaced">Сохранить фильм</button>
         </form>
     </section>
 </main>

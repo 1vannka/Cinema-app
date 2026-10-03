@@ -104,7 +104,7 @@ h1 a[aria-current="page"],nav a[aria-current="page"] {
 }
 
 .movies {
-    margin-left: -6px;
+    margin-left: 0;
 }
 
 .movies h2 {
@@ -220,7 +220,6 @@ form[role="search"] label {
 
 input[type="search"] {
     vertical-align: middle;
-    width:85%;
     background-color: #261C14;
     color: #D9BD9C;
     border: 1px solid #8C715A;
@@ -281,6 +280,7 @@ aside figure, aside figcaption, aside blockquote {
 
 table {
     width: 100%;
+    max-width: 100%;
     margin: 25px 0;
     overflow-x: auto;
     display: block;
@@ -301,6 +301,17 @@ th, td {
     border: 1px solid #0D0D0D;
     white-space: nowrap;
     min-width: 160px;
+}
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#movie-sessions table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 tbody tr:nth-child(even) {
@@ -607,6 +618,19 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
 .auth-block {
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.auth-logged-in {
+    color: white;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
 }
 
 .auth-form {
@@ -622,7 +646,6 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
     background-color: #222;
     color: #fff;
     font-size: 14px;
-    width: 120px;
 }
 
 .auth-buttons {
@@ -658,17 +681,12 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
     background-color: #444;
 }
 
-.auth-logged-in {
-    color: white;
-    font-size: 15px;
-}
-
 .logout-btn {
     background-color: transparent;
     border: 1px solid #d32f2f;
     color: #d32f2f;
     text-decoration: none;
-    margin-left: 15px;
+    margin-left: 0;
 }
 
 .logout-btn:hover {
@@ -737,11 +755,6 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
     text-align: center;
     font-size: 14px;
     color: #8C715A;
-}
-
-.error-message{
-    margin-top: 15px;
-    padding: 20px;
 }
 
 .form-container {
@@ -1011,6 +1024,7 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
     font-size: 14px;
     padding: 8px 15px;
     background-color: #261C14;
+    color: #D9BD9C;
 }
 
 .movie-admin-actions {
@@ -1061,9 +1075,19 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
         overflow-x: hidden;
     }
 
+    main,
+    #main-content,
+    .form-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
     #main-content > * {
+        width: 100%;
         min-width: 0;
         max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     header{
@@ -1075,14 +1099,32 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
 
     header,footer{
         padding: 10px;
+        text-align: center;
     }
 
     #main-navigation {
         order: -1;
+        width: 100%;
+    }
+
+    #main-navigation nav,
+    #main-navigation nav ul {
+        width: 100%;
+    }
+
+    #main-navigation nav ul {
+        margin-top: 16px;
     }
     #left-sidebar {
-         order: 2;
-     }
+        order: 2;
+    }
+
+    #left-sidebar,
+    #right-sidebar,
+    .profile-layout > * {
+        width: 100%;
+    }
+
     #daymovie {
         order: 3;
     }
@@ -1099,7 +1141,7 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
         order:2;
         width: auto;
         flex-grow:1;
-        margin: 0;
+        margin: 8px 0 0;
     }
 
     #genres{
@@ -1129,6 +1171,7 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
 
     .auth-block {
         width: 100%;
+        text-align: center;
     }
 
     .auth-form {
@@ -1166,15 +1209,91 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
 @media (min-width:1200px) {
     main {
         display: grid;
-        grid-template-columns: minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);
+        grid-template-columns: minmax(200px, 240px) minmax(0, 1fr) minmax(220px, 280px);
         grid-template-rows: auto auto;
-        gap:30px;
+        gap:24px;
         flex-grow:1;
         height: auto;
+        align-items: start;
     }
+
+    #main-about {
+        grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) minmax(220px, 280px);
+        grid-template-rows: auto auto;
+    }
+
+    #main-about #address {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        margin-top: 0;
+    }
+
+    #main-about #company-info {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+
+    #main-about #contacts {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        margin-top: 0;
+    }
+
+    #main-about #main-navigation {
+        grid-column: 3 / 4;
+        grid-row: 1 / 3;
+        align-self: start;
+    }
+
+    #main-about #main-navigation nav ul {
+        margin-top: 0;
+    }
+
+    .main-content_poster {
+        grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .main-content_poster .poster-section {
+        grid-column: 2 / 3;
+    }
+
+    .main-content_poster .poster {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    .main-content_poster .poster .card-movie {
+        margin-bottom: 0;
+        height: 100%;
+    }
+
     .poster-section {
         grid-column: 2 / 4;
         padding: 0;
+    }
+
+    header .auth-block,
+    header .auth-form,
+    header .auth-buttons {
+        width: auto;
+    }
+
+    header .auth-block {
+        margin-left: auto;
+        justify-content: flex-end;
+    }
+
+    header .auth-form {
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    header .auth-form input {
+        min-width: 0;
+        width: 180px;
     }
 
 }
@@ -1182,16 +1301,212 @@ textarea::placeholder, #reviewer-name::placeholder, #reviewer-email::placeholder
 
 @media (min-width: 1600px) {
     main {
-        grid-template-columns: minmax(0,1fr) minmax(0,2.5fr) minmax(0,1fr);
-        gap:40px;
-        padding:40px;
+        grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(240px, 300px);
+        gap:30px;
+        padding:30px;
     }
 }
 
 @media (min-width: 1920px) {
     main{
-        grid-template-columns: minmax(0,1fr) minmax(0,3fr) minmax(0,1fr);
-        gap:50px;
-        padding:50px;
+        grid-template-columns: minmax(240px, 280px) minmax(0, 1fr) minmax(260px, 320px);
+        gap:34px;
+        padding:34px;
     }
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.link-plain-btn { text-decoration: none; display: inline-block; }
+.text-link-underline { text-decoration: underline; }
+.inline-form-inline { display: inline; margin: 0; }
+.section-intro-center { text-align: center; margin-bottom: 40px; }
+.helper-text { display: block; margin-top: 6px; color: #8C715A; }
+.form-submit-spaced { margin-top: 10px; }
+.form-submit-spaced-lg { margin-top: 15px; }
+.form-error-spaced { margin-bottom: 20px; }
+.form-actions-split { display: flex; gap: 15px; margin-top: 15px; }
+.form-actions-item { flex: 1; }
+.poster-preview { margin-bottom: 20px; text-align: center; }
+.poster-preview-note { margin-bottom: 8px; }
+.poster-preview-image { max-width: 220px; border: 1px solid #8C715A; border-radius: 4px; }
+.admin-tools { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.profile-entry-link { color: #D9BD9C; text-decoration: underline; margin: 0 15px; }
+.profile-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    color: #856404;
+}
+.auth-password-wrap { display: flex; flex-direction: column; }
+.auth-error { color: #ff4d4d; font-size: 11px; margin-top: 2px; }
+.review-manage-link {
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #D9BD9C;
+    color: #261C14;
+}
+
+.error-page-body { margin: 0; }
+.error-page-main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+}
+.error-page-title { font-size: clamp(16px, 6vw, 24px); margin: 0 0 12px; }
+.error-page-message { max-width: 680px; margin: 0 0 18px; }
+.error-page-link { color: #D9BD9C; text-decoration: underline; font-weight: 700; }
+
+@media (max-width: 700px) {
+    #main-header {
+        position: static;
+        top: auto;
+    }
+
+    main,
+    #main-content,
+    .form-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    header,
+    footer { padding-left: 12px; padding-right: 12px; }
+
+    .card-movie,
+    .movie-form-wrapper,
+    .registration-container,
+    .profile-block-main,
+    .profile-block-secondary {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .card-movie_button,
+    .auth-btn,
+    .profile-ticket-btn,
+    .form-cancel-link {
+        width: 100%;
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .auth-buttons { flex-direction: column; }
+
+    .profile-entry-link {
+        margin: 0;
+        text-align: center;
+    }
+
+    .form-row,
+    .form-actions-split,
+    .profile-actions,
+    .movie-admin-actions,
+    .ticket-seats-info,
+    .profile-ticket-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form-col,
+    .form-actions-item,
+    .movie-admin-actions .card-movie_button,
+    .movie-admin-actions .inline-form,
+    .movie-admin-actions .inline-form button {
+        width: 100%;
+    }
+
+    .table-actions-group {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 701px) {
+    #main-header {
+        position: sticky !important;
+        top: 0;
+        z-index: 1000;
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    max-width: 100%;
+}
+
+main,
+#main-content,
+.form-container {
+    width: min(100%, 1440px);
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: clip;
+}
+
+#main-content,
+.form-container {
+    padding-left: clamp(12px, 2.4vw, 28px);
+    padding-right: clamp(12px, 2.4vw, 28px);
+}
+
+.card-movie,
+.movie-form-wrapper,
+.registration-container,
+.profile-block-main,
+.profile-block-secondary,
+.ticket-info-card,
+.ticket-edit-card {
+    max-width: 100%;
+}
+
+header form[role="search"],
+header .auth-block {
+    width: 100%;
+}
+
+input[type="search"] {
+    width: 100%;
+    min-width: 0;
+}
+
+.form-row {
+    flex-wrap: wrap;
+}
+
+.form-col {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.form-actions-split,
+.movie-admin-actions,
+.table-actions-group,
+.profile-ticket-item,
+.ticket-seats-info {
+    flex-wrap: wrap;
 }

@@ -1,95 +1,106 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    {{> head }}
-    <title>{{movie.title}} - КиноРум</title>
+  {{> head }}
+  <title>{{movie.title}} - КиноРум</title>
 </head>
 <body>
 
 {{> header }}
 
 <main>
-    {{> menu }}
+  {{> menu }}
 
-    <article id="movie-content">
-        <h2 id="movie-title">
-            {{movie.title}} {{#if movie.year}}({{movie.year}}){{/if}}
-        </h2>
+  <article id="movie-content">
+    <h2 id="movie-title">
+      {{movie.title}} {{#if movie.year}}({{movie.year}}){{/if}}
+    </h2>
 
-        {{#if isAdmin}}
-            <div class="movie-admin-actions">
-                <a href="/movies/{{movie.id}}/edit" class="card-movie_button" style="text-decoration: none;">Редактировать</a>
-                <form action="/movies/{{movie.id}}/delete" method="POST" class="inline-form" onsubmit="return confirm('Точно удалить?');">
-                    <button type="submit" class="card-movie_button btn-danger">Удалить</button>
-                </form>
-            </div>
-        {{/if}}
+    {{#if isAdmin}}
+      <div class="movie-admin-actions">
+        <a href="/movies/{{movie.id}}/edit" class="card-movie_button link-plain-btn">Редактировать</a>
+        <form action="/movies/{{movie.id}}/delete" method="POST" class="inline-form" onsubmit="return confirm('Точно удалить?');">
+          <button type="submit" class="card-movie_button btn-danger">Удалить</button>
+        </form>
+      </div>
+    {{/if}}
 
-        <figure id="movie-poster">
-            {{#if movie.image}}
-                <img src="{{movie.image}}" alt="Постер фильма {{movie.title}}">
-            {{else}}
-                <img src="/images/default_poster.jpg" alt="Нет постера">
+    <figure id="movie-poster">
+      {{#if movie.image}}
+        <img src="{{movie.image}}" alt="Постер фильма {{movie.title}}">
+      {{else}}
+        <img src="/images/default_poster.jpg" alt="Нет постера">
+      {{/if}}
+      <figcaption>Постер фильма «{{movie.title}}»</figcaption>
+    </figure>
+
+    <dl id="movie-details">
+      <dt><strong>Описание</strong></dt>
+      <dd>{{movie.description}}</dd>
+
+      <dt><strong>Жанр</strong></dt>
+      <dd>{{#if movie.genre}}{{movie.genre}}{{else}}Не указан{{/if}}</dd>
+
+      <dt><strong>Режиссёр</strong></dt>
+      <dd>{{#if movie.director}}{{movie.director}}{{else}}Не указан{{/if}}</dd>
+
+      <dt><strong>Длительность</strong></dt>
+      <dd>{{#if movie.duration}}{{movie.duration}} мин{{else}}Не указана{{/if}}</dd>
+    </dl>
+
+    <section id="movie-sessions">
+      <h2>Ближайшие сеансы</h2>
+      {{#unless user}}
+        <div class="error-message">
+          Чтобы купить билет, нужно <a href="/auth/register" class="text-link-underline">зарегистрироваться</a> или войти.
+        </div>
+      {{/unless}}
+      <div class="table-scroll">
+        <table>
+          <thead>
+          <tr>
+            <th>Дата и время</th>
+            <th>Зал</th>
+            {{#if user}}
+              <th>Действие</th>
             {{/if}}
-            <figcaption>Постер фильма «{{movie.title}}»</figcaption>
-        </figure>
-
-        <dl id="movie-details">
-            <dt><strong>Описание</strong></dt>
-            <dd>{{movie.description}}</dd>
-
-            <dt><strong>Жанр</strong></dt>
-            <dd>{{#if movie.genre}}{{movie.genre}}{{else}}Не указан{{/if}}</dd>
-
-            <dt><strong>Режиссёр</strong></dt>
-            <dd>{{#if movie.director}}{{movie.director}}{{else}}Не указан{{/if}}</dd>
-
-            <dt><strong>Длительность</strong></dt>
-            <dd>{{#if movie.duration}}{{movie.duration}} мин{{else}}Не указана{{/if}}</dd>
-        </dl>
-
-        <section id="movie-sessions">
-            <h2>Ближайшие сеансы</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Дата и время</th>
-                    <th>Зал</th>
-                    <th>Действие</th>
-                    {{#if isAdmin}}<th>Управление</th>{{/if}}
-                </tr>
-                </thead>
-                <tbody>
-                {{#if movie.sessions.length}}
-                    {{#each movie.sessions}}
-                        <tr>
-                            <td><time>{{this.displayDate}}</time></td>
-                            <td>{{#if this.hall}}{{this.hall}}{{else}}Основной{{/if}}</td>
-                            <td>
-                                <a href="/tickets/book/{{this.id}}" class="card-movie_button btn-table">Купить</a>
-                            </td>
-                            {{#if ../isAdmin}}
-                                <td>
-                                    <div class="table-actions-group">
-                                        <a href="/sessions/{{this.id}}/edit" class="card-movie_button btn-table-small btn-edit-dark">Ред.</a>
-                                        <form action="/sessions/{{this.id}}/delete" method="POST" class="inline-form" onsubmit="return confirm('Удалить сеанс?');">
-                                            <button type="submit" class="card-movie_button btn-table-small btn-danger">Х</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            {{/if}}
-                        </tr>
-                    {{/each}}
-                {{else}}
-                    <tr>
-                        <td colspan="{{#if isAdmin}}4{{else}}3{{/if}}" class="text-center">Сеансов пока нет</td>
-                    </tr>
+            {{#if isAdmin}}<th>Управление</th>{{/if}}
+          </tr>
+          </thead>
+          <tbody>
+          {{#if movie.sessions.length}}
+            {{#each movie.sessions}}
+              <tr>
+                <td><time>{{this.displayDate}}</time></td>
+                <td>{{#if this.hall}}{{this.hall}}{{else}}Основной{{/if}}</td>
+                {{#if ../user}}
+                  <td>
+                    <a href="/tickets/book/{{this.id}}" class="card-movie_button btn-table">Купить</a>
+                  </td>
                 {{/if}}
-                </tbody>
-            </table>
-        </section>
+                {{#if ../isAdmin}}
+                  <td>
+                    <div class="table-actions-group">
+                      <a href="/sessions/{{this.id}}/edit" class="card-movie_button btn-table-small btn-edit-dark">Ред.</a>
+                      <form action="/sessions/{{this.id}}/delete" method="POST" class="inline-form" onsubmit="return confirm('Удалить сеанс?');">
+                        <button type="submit" class="card-movie_button btn-table-small btn-danger">Х</button>
+                      </form>
+                    </div>
+                  </td>
+                {{/if}}
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <td colspan="{{#if isAdmin}}4{{else}}{{#if user}}3{{else}}2{{/if}}{{/if}}" class="text-center">Сеансов пока нет</td>
+            </tr>
+          {{/if}}
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-    </article>
+  </article>
 </main>
 
 {{> footer }}

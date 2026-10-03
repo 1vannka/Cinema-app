@@ -1,49 +1,78 @@
-import { Controller, Post, Body, HttpStatus, Res } from '@nestjs/common';
-import {ApiTags, ApiOperation, ApiResponse, ApiExcludeController} from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import express from 'express';
+import {
+  Controller,
+  Post,
+  Get,
+  Req,
+  UseGuards,
+  UseFilters,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiConsumes,
+} from '@nestjs/swagger';
+import { SuperTokensResponseDto } from './dto/auth-api.dto';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthApiExceptionFilter } from './filters/auth-api-exception.filter';
 
-@ApiExcludeController()
-@ApiTags('auth')
-@Controller('api/auth')
+const authFormSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      example: 'artur@example.ru',
+    },
+    password: {
+      type: 'string',
+      example: '12345678',
+    },
+  },
+  required: ['email', 'password'],
+};
+
+@ApiTags('Auth API')
+@Controller('auth')
+@UseFilters(AuthApiExceptionFilter)
 export class AuthApiController {
-    constructor(private readonly authService: AuthService) {}
+  @Post('signin')
+  @ApiOperation({ summary: 'Авторизация пользователя' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiBody({ schema: authFormSchema })
+  @ApiResponse({ status: 200, type: SuperTokensResponseDto })
+  async signIn() {
+    return;
+  }
 
-    @Post('register')
-    @ApiOperation({ summary: 'Регистрация нового пользователя' })
-    @ApiResponse({ status: 201, description: 'Пользователь успешно зарегистрирован' })
-    @ApiResponse({ status: 400, description: 'Логин или Email уже заняты' })
-    async register(@Body() body: any, @Res() res: express.Response) {
-        const { login, email, password, name } = body;
+  @Post('signup')
+  @ApiOperation({ summary: 'Регистрация' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiBody({ schema: authFormSchema })
+  @ApiResponse({ status: 200, type: SuperTokensResponseDto })
+  async signUp() {
+    return;
+  }
 
-        const newUser = await this.authService.register(login, email, password, name);
+  @Post('signout')
+  @ApiOperation({ summary: 'Выход' })
+  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 401, description: 'Требуется авторизация' })
+  async signOut() {
+    return;
+  }
 
-        if (!newUser) {
-            return res.status(HttpStatus.BAD_REQUEST).json({
-                message: 'Пользователь с таким логином или email уже существует'
-            });
-        }
-
-        delete (newUser as any).password;
-        return res.status(HttpStatus.CREATED).json(newUser);
-    }
-
-    @Post('login')
-    @ApiOperation({ summary: 'Вход в систему' })
-    @ApiResponse({ status: 200, description: 'Успешный вход' })
-    @ApiResponse({ status: 401, description: 'Неверный логин или пароль' })
-    async login(@Body() body: any, @Res() res: express.Response) {
-        const user = await this.authService.validateUser(String(body.login), String(body.password));
-
-        if (!user) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                message: 'Неверный логин или пароль'
-            });
-        }
-
-        return res.status(HttpStatus.OK).json({
-            message: 'Вход выполнен успешно',
-            userId: user.id
-        });
-    }
+  @Get('me')
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: 'Получить данные текущего пользователя',
+  })
+  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 401, description: 'Требуется авторизация' })
+  async getProfile(@Req() req: any) {
+    return {
+      message: 'Сессия активна',
+      user: req.authUser,
+    };
+  }
 }

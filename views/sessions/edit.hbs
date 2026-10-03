@@ -23,12 +23,17 @@
                 </div>
             </div>
 
-            <div style="display: flex; gap: 15px; margin-top: 15px;">
-                <button type="submit" class="card-movie_button" style="flex: 1;">Сохранить изменения</button>
-
-                <form action="/sessions/{{session.id}}/delete" method="POST" style="flex: 1;">
-                    <button type="submit" class="card-movie_button" style="width: 100%; background-color: #8C141E;" onclick="return confirm('Удалить этот сеанс?');">Удалить сеанс</button>
-                </form>
+            <div class="form-actions-split">
+                <button type="submit" class="card-movie_button form-actions-item">Сохранить изменения</button>
+                <button
+                        type="submit"
+                        formaction="/sessions/{{session.id}}/delete"
+                        formmethod="POST"
+                        class="card-movie_button btn-danger form-actions-item"
+                        onclick="return confirm('Удалить этот сеанс?');"
+                >
+                    Удалить сеанс
+                </button>
             </div>
 
             <div class="form-cancel-wrapper">

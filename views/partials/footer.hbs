@@ -1,4 +1,4 @@
-<footer id="footer_app">
+<footer id="footer_app" data-server-elapsed-ms="{{serverElapsedTimeMs}}">
     <p>&copy; 2025 КиноРум.</p>
 
     <address>
@@ -6,5 +6,8 @@
             <a href="mailto:info@kinorum.ru">info@kinorum.ru</a></p>
     </address>
 
-    <p v-if="loadTime">Страница загружена за <span v-text="loadTime"></span> секунд</p>
+    <p v-if="loadTime || serverLoadTime">
+        Сервер: <span v-if="serverLoadTime" v-text="serverLoadTime"></span><span v-else>n/a</span> c,
+        клиент: <span v-if="loadTime" v-text="loadTime"></span><span v-else>n/a</span> c
+    </p>
 </footer>
